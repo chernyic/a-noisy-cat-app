@@ -1,11 +1,9 @@
 package com.panxing.cat.util;
 
-import java.util.HashMap;
-
 /**
  * Created by panxing on 17/5/2
  */
-public class Result extends HashMap<String, Object> {
+public class Result {
 
     public static final Result BLANK_SUCCESS = new Result(ErrorCode.SUCCESS, null, true, null);
 
@@ -20,6 +18,4 @@ public class Result extends HashMap<String, Object> {
     public final Object data;
     public final boolean success;
     public final String msg;
-
-
 }

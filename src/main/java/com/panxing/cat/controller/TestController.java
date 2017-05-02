@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/")
 public class TestController {
 
 
@@ -19,7 +19,7 @@ public class TestController {
     private ITestService testService;
 
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     @ResponseBody
     public Result test() {
         return testService.test();
