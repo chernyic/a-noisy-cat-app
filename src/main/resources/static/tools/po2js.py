@@ -4,9 +4,10 @@
 import json
 import optparse
 import os
-import polib
 import re
 import sys
+
+import polib
 
 parser = optparse.OptionParser(usage="usage: %prog [options] pofile...")
 parser.add_option("--callback", default="_.setTranslation", dest="callback",
