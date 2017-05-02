@@ -1,4 +1,4 @@
-package com.panxing;
+package com.panxing.cat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
