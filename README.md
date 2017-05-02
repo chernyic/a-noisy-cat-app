@@ -1,6 +1,6 @@
-A Dark Room
+A Noisy Cat
 ===========
-> "awake. head throbbing. vision blurry. come light the fire."
+> "meow meow meow!"
 
 a minimalist text adventure game for your browser
 
