@@ -28,3 +28,15 @@ output_df = output_df.rename(columns={'username': 'username'})
 
 # Print output DataFrame
 print(output_df)
+
+
+# Plot a horizontal bar chart
+output_df.plot(kind='barh', y='username', x=['good_status_count', 'bad_status_count'], stacked=True)
+
+# Add title and axis labels
+plt.title('Status Counts by User')
+plt.xlabel('Count')
+plt.ylabel('Username')
+
+# Show the plot
+plt.show()
