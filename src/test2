@@ -9,3 +9,22 @@ df['uri'] = df[['clientId', 'uri']].apply(lambda x: h_uris_dict[x['clientId']] i
 
 # replace the placeholder value with NA again
 df['uri'] = df['uri'].replace('NaN', np.nan)
+
+
+
+# Pivot table to get counts of each status for each user
+pivot_df = pd.pivot_table(df, index='username', columns='status', values='count', aggfunc='sum')
+
+# Create new columns for good_status_count, bad_status_count, and total_count
+pivot_df['good_status_count'] = pivot_df['good']
+pivot_df['bad_status_count'] = pivot_df['bad']
+pivot_df['total_count'] = pivot_df.sum(axis=1)
+
+# Reorder columns and reset index
+output_df = pivot_df[['good_status_count', 'bad_status_count', 'total_count']].reset_index()
+
+# Rename columns
+output_df = output_df.rename(columns={'username': 'username'})
+
+# Print output DataFrame
+print(output_df)
