@@ -1,0 +1,11 @@
+# fill NA values with a placeholder value
+df['uri'] = df['uri'].fillna('NaN')
+
+# create a dictionary of uri values that end with 'h' for each clientId
+h_uris_dict = df.loc[df['uri'].str.endswith('h'), :].groupby('clientId')['uri'].first().to_dict()
+
+# update the uri values based on the h_uris_dict
+df['uri'] = df[['clientId', 'uri']].apply(lambda x: h_uris_dict[x['clientId']] if not x['uri'].endswith('h') and x['clientId'] in h_uris_dict else x['uri'], axis=1)
+
+# replace the placeholder value with NA again
+df['uri'] = df['uri'].replace('NaN', np.nan)
