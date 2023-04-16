@@ -40,3 +40,17 @@ plt.ylabel('Username')
 
 # Show the plot
 plt.show()
+
+
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  table td, table th {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  table td:first-child {
+    border-left: 4px solid lightgray;
+  }
+</style>
