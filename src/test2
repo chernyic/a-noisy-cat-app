@@ -42,15 +42,14 @@ plt.ylabel('Username')
 plt.show()
 
 
-<style>
-  table {
-    border-collapse: collapse;
-  }
-  table td, table th {
-    border: 1px solid black;
-    padding: 8px;
-  }
-  table td:first-child {
-    border-left: 4px solid lightgray;
-  }
-</style>
+<div style="display: flex; justify-content: space-between; width: 100%;">
+  <div style="border: 1px solid #BDBDBD; border-radius: 5px; padding: 10px 20px; width: 48%;"> 
+    <h2>Card 1</h2>
+    <p>This is the first card.</p>
+  </div>
+  <div style="border: 1px solid #BDBDBD; border-radius: 5px; padding: 10px 20px; width: 48%;">
+    <h2>Card 2</h2>
+    <p>This is the second card.</p>
+  </div>
+</div>
+
