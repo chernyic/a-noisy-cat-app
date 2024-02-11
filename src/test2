@@ -1,55 +1,55 @@
-# fill NA values with a placeholder value
-df['uri'] = df['uri'].fillna('NaN')
 
-# create a dictionary of uri values that end with 'h' for each clientId
-h_uris_dict = df.loc[df['uri'].str.endswith('h'), :].groupby('clientId')['uri'].first().to_dict()
-
-# update the uri values based on the h_uris_dict
-df['uri'] = df[['clientId', 'uri']].apply(lambda x: h_uris_dict[x['clientId']] if not x['uri'].endswith('h') and x['clientId'] in h_uris_dict else x['uri'], axis=1)
-
-# replace the placeholder value with NA again
-df['uri'] = df['uri'].replace('NaN', np.nan)
-
-
-
-# Pivot table to get counts of each status for each user
-pivot_df = pd.pivot_table(df, index='username', columns='status', values='count', aggfunc='sum')
-
-# Create new columns for good_status_count, bad_status_count, and total_count
-pivot_df['good_status_count'] = pivot_df['good']
-pivot_df['bad_status_count'] = pivot_df['bad']
-pivot_df['total_count'] = pivot_df.sum(axis=1)
-
-# Reorder columns and reset index
-output_df = pivot_df[['good_status_count', 'bad_status_count', 'total_count']].reset_index()
-
-# Rename columns
-output_df = output_df.rename(columns={'username': 'username'})
-
-# Print output DataFrame
-print(output_df)
-
-
-# Plot a horizontal bar chart
-output_df.plot(kind='barh', y='username', x=['good_status_count', 'bad_status_count'], stacked=True)
-
-# Add title and axis labels
-plt.title('Status Counts by User')
-plt.xlabel('Count')
-plt.ylabel('Username')
-
-# Show the plot
-plt.show()
-
-
-<div style="display: flex; justify-content: space-between; width: 100%;">
-  <div style="border: 1px solid #BDBDBD; border-radius: 5px; padding: 10px 20px; width: 48%;"> 
-    <h2>Card 1</h2>
-    <p>This is the first card.</p>
-  </div>
-  <div style="border: 1px solid #BDBDBD; border-radius: 5px; padding: 10px 20px; width: 48%;">
-    <h2>Card 2</h2>
-    <p>This is the second card.</p>
-  </div>
-</div>
-
+import boto3  
+ 
+# 创建IAM客户端  
+iam = boto3.client('iam')  
+ 
+# 创建策略文档  
+policy_document = {  
+    "Version": "2012-10-17",  
+    "Statement": [  
+        {  
+            "Effect": "Allow",  
+            "Action": [  
+                "s3:GetObject",  
+                "s3:PutObject",  
+                # 你可以根据需要添加其他S3操作  
+            ],  
+            "Resource": [  
+                "arn:aws:s3:::your-bucket-name",  
+                "arn:aws:s3:::your-bucket-name/*",  
+            ]  
+        }  
+    ]  
+}  
+ 
+# 创建策略  
+try:  
+    response = iam.create_policy(  
+        PolicyName='AccessToSpecificS3Bucket',  
+        PolicyDocument=policy_document,  
+        Description='Policy to allow access to a specific S3 bucket'  
+    )  
+    print(f"Policy created: {response['Policy']['Arn']}")  
+except Exception as e:  
+    print(f"Error creating policy: {e}")  
+ 
+# 获取IAM Role的ARN  
+# 假设你已经知道IAM Role的名字，或者你可以通过其他方式获取它  
+role_name = 'your-role-name'  
+try:  
+    response = iam.get_role(RoleName=role_name)  
+    role_arn = response['Role']['Arn']  
+    print(f"Role ARN: {role_arn}")  
+except Exception as e:  
+    print(f"Error getting role: {e}")  
+ 
+# 将策略附加到IAM Role  
+try:  
+    iam.attach_role_policy(  
+        RoleName=role_name,  
+        PolicyArn=response['Policy']['Arn']  
+    )  
+    print(f"Policy attached to role {role_name}")  
+except Exception as e:  
+    print(f"Error attaching policy to role: {e}")
